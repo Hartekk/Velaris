@@ -20,6 +20,7 @@ namespace Autofac
             builder.RegisterType <TestService>().As<ITestService>().InstancePerRequest();
             builder.RegisterType<DatabaseContext>().InstancePerRequest();
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerRequest();
+            builder.RegisterType<AuthService>().As<IAuthService>().InstancePerRequest();
 
             // Build the container.
             var container = builder.Build();
