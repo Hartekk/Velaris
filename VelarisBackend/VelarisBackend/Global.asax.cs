@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using VelarisBackend.App_Start;
 
 namespace VelarisBackend
 {
@@ -11,8 +9,11 @@ namespace VelarisBackend
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            AreaRegistration.RegisterAllAreas(); 
+            GlobalConfiguration.Configure(AutofacConfig.RegisterDependencies);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+           
         }
     }
+
 }
