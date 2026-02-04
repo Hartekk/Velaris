@@ -22,7 +22,7 @@ namespace VelarisBackend.Infrastructure
             var secret = ConfigurationManager.AppSettings["JwtSecret"];
             var issuer = ConfigurationManager.AppSettings["JwtIssuer"];
             var audience = ConfigurationManager.AppSettings["JwtAudience"];
-            var expirationMinutesSetting = int.Parse(ConfigurationManager.AppSettings["JwtExpirationMinutes"]);
+            var expirationMinutesSetting = int.Parse(ConfigurationManager.AppSettings["JwtExpiryMinutes"]);
 
             if (string.IsNullOrEmpty(secret) || string.IsNullOrEmpty(issuer) || string.IsNullOrEmpty(audience) || string.IsNullOrEmpty(expirationMinutesSetting.ToString()))
             {
