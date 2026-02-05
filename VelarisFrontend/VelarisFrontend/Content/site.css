@@ -1,0 +1,40 @@
+﻿/* Velaris Colour Palette */
+:root {
+    --velaris-primary: #FFD84D;
+    --velaris-secondary: #4DB6E2;
+    --velaris-accent: #4ED1A1;
+    --velaris-highlight: #FF7A5A;
+    --velaris-bg: #FFFDF7;
+    --velaris-text: #2E2E2E;
+}
+
+.velaris-bg {
+    background-color: var(--velaris-bg);
+    color: var(--velaris-text);
+}
+
+/* Navbar */
+.velaris-navbar {
+    background-color: var(--velaris-primary);
+}
+
+    .velaris-navbar .navbar-brand {
+        color: var(--velaris-text);
+    }
+
+/* Card */
+.velaris-card {
+    width: 360px;
+    border-radius: 12px;
+    border: none;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--velaris-secondary);
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: var(--velaris-accent);
+    }

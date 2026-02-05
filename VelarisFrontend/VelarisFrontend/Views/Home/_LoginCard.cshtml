@@ -1,0 +1,25 @@
+﻿<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card velaris-card shadow">
+        <div class="card-body p-4">
+            <h3 class="mb-3 text-center">Welcome to Velaris</h3>
+
+            <form method="post" action="/Auth/Login">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input class="form-control" name="Username" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="Password" />
+                </div>
+
+                <button class="btn btn-primary w-100">Login</button>
+
+                <div class="text-center mt-3">
+                    <a href="/Auth/Register">Create an account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

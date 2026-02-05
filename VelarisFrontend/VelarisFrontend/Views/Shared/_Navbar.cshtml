@@ -1,0 +1,14 @@
+﻿<nav class="navbar navbar-expand-lg velaris-navbar px-4">
+    <a class="navbar-brand fw-bold" href="/">Velaris</a>
+
+    <div class="ms-auto">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="/Auth/Logout" class="btn btn-outline-dark">Logout</a>
+        }
+        else
+        {
+            <a href="/Auth/Login" class="btn btn-outline-dark">Login</a>
+        }
+    </div>
+</nav>
