@@ -4,27 +4,36 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using VelarisFrontend.Models;
 using Newtonsoft.Json;
+using System;
 
 namespace VelarisFrontend.Controllers
 {
     public class AuthController : Controller
     {
+        private static readonly HttpClient _client = new HttpClient
+        {
+            BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["ApiBaseUrl"])
+        };
+
         [HttpGet]
         public ActionResult Login()
         {
-            return View();
+            return Redirect("/Home/Index");
         }
 
         [HttpPost]
         public async Task<ActionResult> Login(LoginViewModel model)
-        {
-            using (var client = new HttpClient())
+        { 
+            if (!ModelState.IsValid)
             {
+                return View(model);
+            }
+
                 var json = JsonConvert.SerializeObject(model);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await client.PostAsync(
-                    "https://localhost:443xx/api/auth/login",
+                var response = await _client.PostAsync(
+                    "api/auth/login",
                     content
                 );
 
@@ -34,13 +43,14 @@ namespace VelarisFrontend.Controllers
                     return View(model);
                 }
 
-                var resultJson = await response.Content.ReadAsStringAsync();
-                dynamic result = JsonConvert.DeserializeObject(resultJson);
+            var resultJson = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<LoginResponseViewModel>(resultJson);
 
-                Session["JwtToken"] = (string)result.token;
+            Session["JwtToken"] = result.Token;
 
-                return RedirectToAction("Index", "Home");
-            }
+            return Redirect("/Home/Index");
+
+
         }
 
 
@@ -49,5 +59,28 @@ namespace VelarisFrontend.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync(
+                "api/auth/register",
+                content
+            );
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Registration failed");
+                return View(model);
+            }
+            return RedirectToAction("Login");
+        }
     }
 }
+
