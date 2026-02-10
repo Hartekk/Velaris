@@ -1,6 +1,4 @@
-﻿
-
-namespace VelarisFrontend.Models
+﻿namespace VelarisFrontend.Models
 {
     public class LoginViewModel
     {

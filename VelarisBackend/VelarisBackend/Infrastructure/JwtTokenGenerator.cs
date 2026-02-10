@@ -1,11 +1,8 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Web;
 using VelarisBackend.Models;
 
 namespace VelarisBackend.Infrastructure
