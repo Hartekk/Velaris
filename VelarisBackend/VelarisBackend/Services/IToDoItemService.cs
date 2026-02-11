@@ -10,5 +10,13 @@ namespace VelarisBackend.Services
     public interface IToDoItemService
     {
         TodoItem Create(string userId, ToDoItemAddReq req);
+        TodoItem Edit(string userId, ToDoItemEditReq req);
+
+        void Delete(string userId, int taskId);
+
+
+        IEnumerable<TodoItem> GetAll(string userId);
+        TodoItem GetOneTask(string userId, int taskId);
+        void DeleteAll(string userId);
     }
 }
