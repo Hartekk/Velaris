@@ -282,6 +282,10 @@
     <Compile Include="Migrations\202602100024068_AddUserIdToTodoItem.Designer.cs">
       <DependentUpon>202602100024068_AddUserIdToTodoItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202602120334379_DateTime.cs" />
+    <Compile Include="Migrations\202602120334379_DateTime.Designer.cs">
+      <DependentUpon>202602120334379_DateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthToken.cs" />
     <Compile Include="Models\TodoItem.cs" />
@@ -328,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202602100024068_AddUserIdToTodoItem.resx">
       <DependentUpon>202602100024068_AddUserIdToTodoItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202602120334379_DateTime.resx">
+      <DependentUpon>202602120334379_DateTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

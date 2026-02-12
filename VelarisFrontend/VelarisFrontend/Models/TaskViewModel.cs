@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace VelarisBackend.DTOs
+namespace VelarisFrontend.Models
 {
-    public class ToDoItemEditReq
+    public class TaskViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public bool IsCompleted { get; set; }
         public DateTime DueDate { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

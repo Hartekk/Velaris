@@ -1,0 +1,30 @@
+﻿@model VelarisFrontend.Models.ButtonViewModel
+
+@{
+    string iconClass = "";
+
+    switch (Model.Type.ToLower())
+    {
+        case "add": iconClass = "fas fa-plus";
+            break;
+        case "delete": iconClass = "fas fa-trash";
+            break;
+        case "edit": iconClass = "fas fa-edit";
+            break;
+        case "complete": iconClass = "fas fa-check";
+            break;
+        default: iconClass = "";
+            break;
+    }
+
+    string finalClass = $"btn btn-transparent {Model.CssClass}".Trim();
+}
+
+<a href="@Model.Url" class="@finalClass" style="background:none; border:none; cursor: pointer; font-size: 10px">
+    @if (!string.IsNullOrEmpty(iconClass))
+            {
+                <i class="@iconClass"></i>
+    } else
+    {  @Model.Label }
+</a>
+

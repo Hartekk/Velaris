@@ -1,28 +1,22 @@
-﻿<div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="card velaris-card shadow">
-        <div class="card-body p-4">
-            <h3 class="mb-3 text-center">Welcome to Velaris</h3>
-            <p>Authenticated: @User.Identity.IsAuthenticated</p>
-            <p>User: @User.Identity.Name</p>
+﻿@{ 
+    ViewBag.Title = "Log in";
+}
 
 
-            <form method="post" action="/Auth/Login">
-                <div class="mb-3">
-                    <label class="form-label">Username</label>
-                    <input class="form-control" name="Username" />
+<div class="container mt-5">
+    <div class="card card-white mx-auto" style="max-width: 400px;">
+        <h4>Log In</h4>
+
+        @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <input class="input-box" placeholder="Username" name="Username" />
+                <input type="password" class="input-box" placeholder="Password" name="password"/>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="/Auth/Register" class="text-light-grey">Register</a>
+                    <button type="submit" class="btn btn-black">Log in</button>
                 </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" name="Password" />
-                </div>
-
-                <button class="btn btn-primary w-100">Login</button>
-
-                <div class="text-center mt-3">
-                    <a href="/Auth/Register">Create an account</a>
-                </div>
-            </form>
-        </div>
+            }   
     </div>
 </div>

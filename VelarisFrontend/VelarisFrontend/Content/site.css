@@ -1,40 +1,57 @@
-﻿/* Velaris Colour Palette */
-:root {
-    --velaris-primary: #FFD84D;
-    --velaris-secondary: #4DB6E2;
-    --velaris-accent: #4ED1A1;
-    --velaris-highlight: #FF7A5A;
-    --velaris-bg: #FFFDF7;
-    --velaris-text: #2E2E2E;
+﻿:root {
+    --primary-white: #f5f5f5;
+    --primary-black: #0D0907;
+    --hover: #555D50;
+    --border-rad: 8px;
 }
 
-.velaris-bg {
-    background-color: var(--velaris-bg);
-    color: var(--velaris-text);
+body {
+    font-family: 'Roboto Mono', monospace;
+    background-color: #f5f5f5;
 }
 
-/* Navbar */
-.velaris-navbar {
-    background-color: var(--velaris-primary);
+h1, h2, h3, h4, h5, h6, .bungee {
+    font-family: 'Bungee', sans-serif !important;
 }
 
-    .velaris-navbar .navbar-brand {
-        color: var(--velaris-text);
-    }
-
-/* Card */
-.velaris-card {
-    width: 360px;
-    border-radius: 12px;
-    border: none;
+.card {
+    background-color: var(--primary-white);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    padding: 20px;
+    border-radius: var(--border-rad);
 }
 
-/* Buttons */
-.btn-primary {
-    background-color: var(--velaris-secondary);
-    border: none;
+.navbar-white {
+    background-color: var(--primary-white);
 }
 
-    .btn-primary:hover {
-        background-color: var(--velaris-accent);
-    }
+.navbar-white a {
+    text-decoration: none;
+    color: var(--primary-black);
+}
+
+.navbar-white a:hover {
+    text-decordation: underline;
+}
+
+.btn-black {
+    background-color: var(--primary-black);
+    color: var(--primary-white);
+}
+
+.btn-black:hover {
+    background-color: var(--hover);
+    color: var(--primary-white);
+}
+
+.text-light-grey {
+    color: #aaa;
+}
+
+.input-box {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-rad);
+    width: 100%;
+}

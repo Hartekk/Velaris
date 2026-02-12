@@ -38,7 +38,8 @@ namespace VelarisBackend.Services
             {
                 Title = request.Title,
                 IsCompleted = false,
-                UserId = userId
+                UserId = userId,
+                DueDate = request.DueDate
             };
 
             _context.TodoItems.Add(todo);
@@ -68,6 +69,7 @@ namespace VelarisBackend.Services
 
             todoItem.Title = request.Title;
             todoItem.IsCompleted = request.IsCompleted;
+            todoItem.DueDate = request.DueDate;
 
             _context.SaveChanges();
 

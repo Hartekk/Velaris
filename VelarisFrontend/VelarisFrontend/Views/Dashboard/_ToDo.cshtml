@@ -1,0 +1,51 @@
+﻿@model VelarisFrontend.Models.DashboardViewModel
+@using VelarisFrontend.Models
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="container mt-5">
+    <div class="d-flex align-items-center mb-2">
+        <h2 class="mr-2">Today</h2>
+        @Html.Partial("_Button", new ButtonViewModel
+   {
+       Type = "add",
+       Url = Url.Action("Create", "Tasks", new { date = DateTime.Now.ToString("dd-MMM-yyyy") })
+   })
+    </div>
+    @if (Model.TodaysTasks != null && Model.TodaysTasks.Any())
+    {
+        foreach (var task in Model.TodaysTasks)
+        {
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="card card-white flex-grow-1">
+                            @task.Title
+                        </div>
+
+                        <div class="ml-3 d-flex gap-2">
+                            @Html.Partial("_Button", new ButtonViewModel
+                            {
+                                Type = "complete",
+                                Url = Url.Action("Complete", "Tasks", new { id = task.Id })
+                            })
+
+                            @Html.Partial("_Button", new ButtonViewModel
+                            {
+                                Type = "edit",
+                                Url = Url.Action("Edit", "Tasks", new { id = task.Id })
+                            })
+
+                            @Html.Partial("_Button", new ButtonViewModel
+                            {
+                                Type = "delete",
+                                Url = Url.Action("Delete", "Tasks", new { id = task.Id })
+                            })
+                        </div>
+                    </div>
+                }
+     } else
+            {
+                <p class="text-muted">No tasks for today</p>
+            }
+</div>

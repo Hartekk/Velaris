@@ -2,35 +2,16 @@
     ViewBag.Title = "Register";
 }
 
-<div class="d-flex justify-content-center align-items-center vh-100">
-    <div class="card velaris-card shadow">
-        <div class="card-body p-4">
-            <h3 class="mb-3 text-center">Create your account</h3>
+<div class="container mt-5">
+    <div class="card card-white mx-auto" style="max-width:400px;">
+        <h4>Register</h4>
 
-            <form method="post" action="/Auth/Register">
-                <div class="mb-3">
-                    <label class="form-label">Username</label>
-                    <input class="form-control" name="Username" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="Email" />
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" name="Password" />
-                </div>
-
-                <button class="btn btn-primary w-100">Register</button>
-
-                <div class="text-center mt-3">
-                    <a href="/Auth/Login" class="text-decoration-none">
-                        Already have an account?
-                    </a>
-                </div>
-            </form>
-        </div>
+        @using(Html.BeginForm("Register", "Auth", FormMethod.Post))
+        {
+            <input class="input-box" placeholder="Username" name="Username" />
+            <input type="email" class="input-box" placeholder="Email" name="Email"/>
+            <input type="password" class="input-box" placeholder="Password" name="Password"/>
+            <input type="password" class="input-box" placeholder="Confirm Password" name="ConfirmPassword"/>
+        }
     </div>
 </div>

@@ -2,11 +2,4 @@
     ViewBag.Title = "Home";
 }
 
-@if (User.Identity.IsAuthenticated)
-{
-    @Html.Partial("_Todo")
-}
-else
-{
-    @Html.Partial("_LoginCard")
-}
+@Html.Partial("_LoginCard")
