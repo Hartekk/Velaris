@@ -31,9 +31,10 @@ namespace VelarisFrontend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["LoginError"] = "Please enter username and password.";
                 return RedirectToAction("Index", "Home");
+
             }
+
 
             var json = JsonConvert.SerializeObject(model);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -83,8 +84,17 @@ namespace VelarisFrontend.Controllers
 
             if (!response.IsSuccessStatusCode)
             {
-                TempData["RegisterError"] = "Registration failed.";
-                return View(model);
+                if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+                {
+                    ModelState.AddModelError("Username", "This username is already taken.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Registration failed. Please try again.");
+                }
+
+                TempData["RegisterModel"] = model;
+                return RedirectToAction("Register");
             }
 
             TempData["LoginError"] = "Registration successful. Please log in.";

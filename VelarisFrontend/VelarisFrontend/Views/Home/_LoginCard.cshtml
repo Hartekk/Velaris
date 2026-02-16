@@ -1,5 +1,6 @@
-﻿@{ 
-    ViewBag.Title = "Log in";
+﻿@model VelarisFrontend.Models.LoginViewModel
+@{ 
+    ViewBag.Title = "Login";
 }
 
 
@@ -8,15 +9,21 @@
         <h4>Log In</h4>
 
         @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                <input class="input-box" placeholder="Username" name="Username" />
-                <input type="password" class="input-box" placeholder="Password" name="password"/>
+        {
+            @Html.AntiForgeryToken()
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="/Auth/Register" class="text-light-grey">Register</a>
-                    <button type="submit" class="btn btn-black">Log in</button>
-                </div>
-            }   
+            @Html.LabelFor(m => m.Username)
+            @Html.ValidationMessageFor(m => m.Username)
+            @Html.TextBoxFor(m => m.Username, new { @class = "input-box", placeholder = "Username" })
+
+            @Html.LabelFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { @class = "input-box", placeholder = "Password" })
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="/Auth/Register" class="text-light-grey">Register</a>
+                <button type="submit" class="btn btn-black">Log in</button>
+            </div>
+        }
     </div>
 </div>

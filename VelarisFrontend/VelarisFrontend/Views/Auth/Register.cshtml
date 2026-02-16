@@ -1,4 +1,6 @@
-﻿@{
+﻿@model VelarisFrontend.Models.RegisterViewModel
+
+@{
     ViewBag.Title = "Register";
 }
 
@@ -9,11 +11,28 @@
         @using (Html.BeginForm("Register", "Auth", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
-            <input class="input-box" placeholder="Username" name="Username" />
-            <input type="email" class="input-box" placeholder="Email" name="Email" />
-            <input type="password" class="input-box" placeholder="Password" name="Password" />
-            <input type="password" class="input-box" placeholder="Confirm Password" name="ConfirmPassword" />
-            <button type="submit" class="btn btn-black">Register</button>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.LabelFor(m => m.Username)<br />
+            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.Username, new { @class = "input-box", placeholder = "Username" })
+
+            @Html.LabelFor(m => m.Email)<br />
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "input-box", placeholder = "Email", type = "email" })
+
+
+            @Html.LabelFor(m => m.Password)<br/>
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            @Html.PasswordFor(m => m.Password, new { @class = "input-box", placeholder = "Password" })
+
+
+            @Html.LabelFor(m => m.ConfirmPassword)<br/>
+            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "input-box", placeholder = "Confirm Password" })
+
+            <button type="submit" class="btn btn-black mt-3">Register</button>
         }
     </div>
 </div>

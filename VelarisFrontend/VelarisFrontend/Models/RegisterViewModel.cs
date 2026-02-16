@@ -1,5 +1,6 @@
 ﻿
 
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace VelarisFrontend.Models
@@ -8,13 +9,14 @@ namespace VelarisFrontend.Models
     {
         [Required]
         public string Username { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Set a password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        
+        [Required(ErrorMessage ="Enter an email address")]
+        [EmailAddress]
         public string Email { get; set; }
-        [Required]
-        [Compare("Password")]
+        [Required(ErrorMessage ="Password must match")]
+        [Compare("Password"), Display(Name ="Confirm password")]
         public string ConfirmPassword { get; set; }
     }
 }
