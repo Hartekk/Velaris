@@ -1,0 +1,29 @@
+﻿<div class="modal-backdrop" style="position: fixed; top: 0; left: 0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000; display:@(Model.Show ? "block" : "none");">
+    <div class="modal-content card p-4" style="max-width:500px; margin: 100px auto; position: relative; z-index: 1001;">
+        <button class="close-modal" style="position:absolute; top:10px; right:10px;">&times;</button>
+        <h4>Modal Title</h4>
+        <form id="modalForm" style="display:none;">
+            <div class="mb-2">
+                <label>Title</label>
+                <input type="text" name="Title" class="form-control" required />
+            </div>
+            <div class="mb-2">
+                <label>Due Date</label>
+                <input type="date" name="DueDate" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        <div id="deleteSection" style="display:none;">
+            <p>Are you sure you want to delete <strong id="deleteHighlight"></strong>?</p>
+            <button id="confirmDelete" class="btn btn-danger">Delete</button>
+        </div>
+        <div id="completeTask" style="display:none;">
+            <p>Mark item <strong id="completeHighlight"></strong> as complete?</p>
+            <button id="confirmComplete" class="btn btn-outline-success">Mark as Complete</button>
+        </div>
+        <div id="deleteAll" style="display:none;">
+            <p>Are you sure that you want to delete <strong>all</strong> existing to-do items?</p>
+            <button id="confirmDeleteAll" class="btn btn-danger">Yes, Delete</button>
+        </div>
+    </div>
+</div>

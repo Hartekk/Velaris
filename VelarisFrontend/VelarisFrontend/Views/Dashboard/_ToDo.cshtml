@@ -5,47 +5,304 @@
     ViewBag.Title = "Dashboard";
 }
 
+
+
 <div class="container mt-5">
     <div class="d-flex align-items-center mb-2">
         <h2 class="mr-2">Today</h2>
         @Html.Partial("_Button", new ButtonViewModel
    {
        Type = "add",
-       Url = Url.Action("Create", "Tasks", new { date = DateTime.Now.ToString("dd-MMM-yyyy") })
+       OnClick = $"openModal('add')"
    })
     </div>
     @if (Model.TodaysTasks != null && Model.TodaysTasks.Any())
     {
         foreach (var task in Model.TodaysTasks)
         {
-                    <div class="d-flex align-items-center mb-2">
-                        <div class="card card-white flex-grow-1">
-                            @task.Title
-                        </div>
 
-                        <div class="ml-3 d-flex gap-2">
-                            @Html.Partial("_Button", new ButtonViewModel
-                            {
-                                Type = "complete",
-                                Url = Url.Action("Complete", "Tasks", new { id = task.Id })
-                            })
+            <div class="d-flex align-items-center mb-2">
+                <div class="card card-white flex-grow-1">
+                    @task.Title
+                </div>
 
-                            @Html.Partial("_Button", new ButtonViewModel
-                            {
-                                Type = "edit",
-                                Url = Url.Action("Edit", "Tasks", new { id = task.Id })
-                            })
+                <div class="ml-3 d-flex gap-2">
+                    @Html.Partial("_Button", new ButtonViewModel
+               {
+                   Type = "complete",
+                   OnClick = $"openModal('complete', {{ Id: {task.Id}, Title: '{task.Title}', DueDate: '{task.DueDate:yyyy-MM-dd}' }})"
+               })
 
-                            @Html.Partial("_Button", new ButtonViewModel
-                            {
-                                Type = "delete",
-                                Url = Url.Action("Delete", "Tasks", new { id = task.Id })
-                            })
-                        </div>
-                    </div>
-                }
-     } else
-            {
-                <p class="text-muted">No tasks for today</p>
-            }
+
+                    @Html.Partial("_Button", new ButtonViewModel
+               {
+                   Type = "edit",
+                   OnClick = $"openModal('edit', {{ Id: {task.Id}, Title: '{task.Title}', DueDate: '{task.DueDate:yyyy-MM-dd}' }})"
+               })
+
+
+                    @Html.Partial("_Button", new ButtonViewModel
+               {
+                   Type = "delete",
+                   OnClick = $"openModal('delete', {{ Id: {task.Id} }})"
+               })
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-muted">No tasks for today @User.Identity.Name</p>
+    }
 </div>
+
+<div class="container mt-5">
+    <div class="d-flex align-items-center mb-2">
+        <h2 class="mr-2">Upcoming Tasks</h2>
+        @Html.Partial("_Button", new ButtonViewModel
+   {
+       Type = "add",
+       OnClick = $"openModal('add')"
+   })
+    </div>
+    @if (Model.UpcomingTasks != null && Model.UpcomingTasks.Any())
+    {
+        foreach (var task in Model.UpcomingTasks)
+        {
+
+            <div class="d-flex align-items-center mb-2">
+                <div class="card card-white flex-grow-1 d-flex justify-content-between flex-nowrap">
+                    <span>@task.Title</span>
+                    <span class="text-muted" style="font-size:10px;">@task.DueDate.ToString("dd-MM-yyyy")</span>
+                </div>
+
+                <div class="ml-3 d-flex gap-2">
+                    @Html.Partial("_Button", new ButtonViewModel
+               {
+                   Type = "complete",
+                   OnClick = $"openModal('complete', {{ Id: {task.Id}, Title: '{task.Title}', DueDate: '{task.DueDate:yyyy-MM-dd}' }})"
+               })
+
+
+                    @Html.Partial("_Button", new ButtonViewModel
+               {
+                   Type = "edit",
+                   OnClick = $"openModal('edit', {{ Id: {task.Id}, Title: '{task.Title}', DueDate: '{task.DueDate:yyyy-MM-dd}' }})"
+               })
+
+
+                    @Html.Partial("_Button", new ButtonViewModel
+               {
+                   Type = "delete",
+                   OnClick = $"openModal('delete', {{ Id: {task.Id} }})"
+               })
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-muted">No upcoming tasks @User.Identity.Name</p>
+    }
+</div>
+@if ((Model.UpcomingTasks?.Any() ?? false) || (Model.TodaysTasks?.Any() ?? false)) 
+{<div class="d-flex justify-content-end mt-5 me-2">
+    <button class="btn btn-danger" onclick="openModal('deleteall')">Delete All Tasks</button>
+</div> }
+
+
+
+
+@Html.Partial("_Modal", new ModalViewModel { Show = false })
+<script>
+    window.openModal = function (type, task) {
+
+        const modal = document.querySelector('.modal-backdrop');
+        const title = modal.querySelector('h4');
+        const form = modal.querySelector('#modalForm');
+
+        modal.style.display = 'block';
+
+        form.style.display = 'none';
+        document.getElementById('deleteSection').style.display = 'none';
+        document.getElementById('completeTask').style.display = 'none';
+        document.getElementById('deleteAll').style.display = 'none';
+
+        if (type === 'add') {
+            title.textContent = 'Add To-do Item';
+
+            form.style.display = 'block';
+
+            form.querySelector('[name="Title"]').value = '';
+            form.querySelector('[name="DueDate"]').value =
+                new Date().toISOString().split('T')[0];
+
+            form.onsubmit = (e) => {
+                e.preventDefault();
+                addTask(form);
+            };
+        }
+
+        else if (type === 'edit') {
+            title.textContent = 'Edit To-do Item';
+
+            form.style.display = 'block';
+
+            form.querySelector('[name="Title"]').value = task.Title;
+            form.querySelector('[name="DueDate"]').value = task.DueDate;
+
+            form.onsubmit = (e) => {
+                e.preventDefault();
+                editTask(task.Id, form);
+            };
+        }
+
+        else if (type === 'delete') {
+            title.textContent = 'Delete To-do Item';
+            document.getElementById('deleteSection').style.display = 'block';
+            modal.querySelector('#deleteHighlight').textContent = task.Title;
+
+            document.getElementById('confirmDelete').onclick =
+                () => deleteTask(task.Id);
+        }
+
+        else if (type === 'complete') {
+            title.textContent = 'Check off To-Do Item?'
+            document.getElementById('completeTask').style.display = 'block';
+            modal.querySelector('#completeHighlight').textContent = task.Title;
+
+            document.getElementById('confirmComplete').onclick =
+                (e) => {
+                    e.preventDefault();
+                    completeTask(task.Id, task.Title, task.DueDate);
+                }
+        } else if (type === 'deleteall') {
+            title.textContent = 'Delete ALL tasks?'
+            document.getElementById('deleteAll').style.display = 'block';
+            document.getElementById('confirmDeleteAll').onclick =
+                () => deleteAllTasks();
+        }
+    };
+
+    async function addTask(form) {
+        const data = {
+            Title: form.querySelector('[name="Title"]').value,
+            DueDate: form.querySelector('[name="DueDate"]').value
+        };
+
+        const response = await fetch('/Dashboard/AddTask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            location.reload();
+        } else {
+            alert("Failed to add task");
+        }
+    }
+
+    async function editTask(id, form) {
+        const data = {
+            Id: id,
+            Title: form.querySelector('[name="Title"]').value,
+            DueDate: form.querySelector('[name="DueDate"]').value
+        };
+
+        try {
+            const response = await fetch('/Dashboard/EditTask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                location.reload();
+            } else {
+                alert("Failed to edit task");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error editing task");
+        }
+    }
+
+    async function completeTask(id, title, duedate) {
+        const data = {
+            Id: id,
+            Title: title,
+            DueDate: duedate,
+            IsCompleted: true
+        }
+
+        try {
+            const response = await fetch('/Dashboard/EditTask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                location.reload();
+            } else {
+                alert("Failed to mark as complete");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error marking task as complete");
+        }
+    }
+
+
+    async function deleteTask(id) {
+        try {
+            const response = await fetch(`/Dashboard/DeleteTask?id=${id}`, {
+                method: 'POST'
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                location.reload();
+            } else {
+                alert("Failed to delete task");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error deleting task");
+        }
+    }
+
+    async function deleteAllTasks() {
+        try {
+            const response = await fetch(`/Dashboard/DeleteAllTasks`, {
+                method: 'POST'
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                location.reload();
+            } else {
+                alert("Failed to delete all tasks");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Error deleting all tasks");
+        }
+    }
+
+    var closeBtn = document.querySelector('.close-modal');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+            this.closest('.modal-backdrop').style.display = 'none';
+        });
+    }
+</script>

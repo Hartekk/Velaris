@@ -43,7 +43,7 @@ namespace VelarisBackend.Controllers
             return Ok(todo);
         }
 
-        [HttpPut, Route("{id:int}")]
+        [HttpPut, Route("edit/{id:int}")]
         public IHttpActionResult Edit(int id, ToDoItemEditReq request) {
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace VelarisBackend.Controllers
         [HttpGet, Route("getall")]
         public IHttpActionResult GetAll() {
             var userId = GetUserIdFromToken();
-            if (!string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized();
             }

@@ -12,5 +12,6 @@ namespace VelarisFrontend.Models
         public string Url { get; set; }
         public string Type { get; set; } 
         public string CssClass { get; set; }
+        public string OnClick { get; set; }
     }
 }

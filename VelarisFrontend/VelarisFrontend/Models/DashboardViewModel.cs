@@ -7,6 +7,7 @@ namespace VelarisFrontend.Models
 {
     public class DashboardViewModel
     {
+        public List<TaskViewModel> OverdueTasks { get; set; }
         public List<TaskViewModel> TodaysTasks { get; set; }
         public List<TaskViewModel> UpcomingTasks { get; set; }
     }

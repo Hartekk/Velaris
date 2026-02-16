@@ -54,7 +54,7 @@ namespace VelarisFrontend.Controllers
             Session["JwtToken"] = result.Token; 
             FormsAuthentication.SetAuthCookie(model.Username, false);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
 
 
@@ -67,6 +67,7 @@ namespace VelarisFrontend.Controllers
 
         // Handle Registration form submission
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
